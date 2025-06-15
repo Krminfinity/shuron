@@ -1,0 +1,1217 @@
+\documentclass[a4j,10pt]{jsarticle}
+\usepackage{amsmath,amsfonts}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tocloft}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{CJKutf8}
+\usepackage{url}
+\usepackage{hyperref}
+
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins, theorems}
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+
+\newtheorem{claim}{Claim}
+\newtheorem{proposition}{Proposition}
+
+
+\pagestyle{plain}
+\begin{document}
+\noindent {\Large {\bf 修論関連}} \hfill  (\today)\\
+\noindent \rule{\textwidth}{0.2mm} \\
+\vspace{-0.4cm}
+
+\begin{itemize}
+  \item $I$: A non-empty finite set of teachers.
+  \item $S$: A non-empty finite set of schools.
+  \item $\succ_i$: A strict preference relation of teacher $i \in I$ over the set of schools $S$
+  \item $\emptyset$: Represents the state where a teacher is unmatched to any school.
+  \item $\succ_s$: A strict priority order of school $s \in S$ over the set of teachers $I$. (Note that we assume all schools regard all teachers as acceptable.)
+  \item $\succ_I$: The profile of all teachers' preferences, i.e., $\succ_I = (\succ_i)_{i \in I}$.
+  \item $\succ_S$: The profile of all schools' priority orders, i.e., $\succ_S = (\succ_s)_{s \in S}$.
+\end{itemize}
+
+We call a subset $I' \subseteq I$ {\bf \emph{feasible}} at school $s$ if $I' \in \mathcal{F}_s$.
+
+We call a matching $\mu$ {\bf \emph{individually rational} }if $\mu_i \succ_i \emptyset$ for each $i \in I$.
+
+We call $i$ {\bf \emph{justifiedly envious(has justified envy toward)}} of $i'$ if there exists a school $s \in S$ such that $s \succ_i \mu_i$, $i' \in \mu_s$, and $i \succ_s i'$.
+
+We call a matching $\mu$ {\bf \emph{fair}} if no teacher has justified envy toward another teacher.
+
+We call a matching $\mu$ {\bf \emph{non-wasteful}} if there is no pair $(i, s) \in I \times S$ such that $s \succ_i \mu_i$ and $\mu_s \cup \{i\}$ is feasible at $s$.
+
+We call a matching $\mu$ {\bf \emph{stable}} if it is feasible, individually rational, fair, and non-wasteful.
+
+A matching $\mu$ is {\bf \emph{feasible}} if $\forall s \in S$, $\mu_s \in \mathcal{F}_s$.\\
+
+
+
+A matching $\mu$ is $\alpha$-{\bf \emph{feasible}} if $\forall s \in S , \mu_s \in \mathcal{F}_s$ and $\mu_i \neq \emptyset$ , whenever $i$ is $\alpha$-teacher. \\
+
+
+\begin{defn}
+  A constraint $\mathcal{F}_s$ is a {\bf \emph{general upper-bound}} if $I' \in \mathcal{F}_s$ and $I'' \subseteq I'$ imply $I'' \in \mathcal{F}_s$.
+\end{defn}
+
+\begin{defn}
+  A matching $\mu$ is the {\bf \emph{teacher-optimal fair matching (TOFM)}} if:
+  
+  (i) $\mu$ is feasible, individually rational, and fair, and
+  
+  (ii) $\mu_i \succeq_i \mu'_i$ for each $i \in I$ and every $\mu'$ that is feasible, individually rational, and fair.
+\end{defn}
+
+
+参照：Fair Matching under Constraints:Theory and Applications, Kamada and Kojima(2024)
+\[
+  D_s(p) := \{i \in I \mid i \succeq_s i^{(s,p_s)} \text{ and } s \succ_i \emptyset; i \succeq_{s'} i^{(s',p_{s'})} \implies s \succeq_i s' \}.
+\]
+
+\begin{tcolorbox}
+  Assume  $\mathcal{F}_s$ is a general upper-bound. ・・・(1)\\
+  Assume that $\forall s \in S,\forall i \in I_\alpha,\forall j \in I\setminus I_\alpha$,[$i \succ_s \emptyset$ and $j\succ_s \emptyset$] $\Longrightarrow $ $i \succ_s j$.・・・(2)\\
+  Assume that $\exists \mu $ s.t. \\
+    (i)$\forall s \in S , \mu_s \in \mathcal{F}_s$,\\
+    (ii)$\forall i \in I_\alpha,\exists s \in S, i \in \mu_s$.・・・(3)\\
+  Assume that $\forall i \in I_\alpha, \forall s \in S, s \succ_i \emptyset$.・・・(4)
+\end{tcolorbox}
+
+例(予算制約下でのTOFM)\\
+
+$1,3 \in I_\alpha$\\
+$(4)\succ_1:45\emptyset$ \\  
+$(4)\succ_2:4\emptyset 5$ \\
+$(2)\succ_3:54\emptyset$ \\
+$(2)\succ_4:132\emptyset$ \\  
+$(4)\succ_5:312\emptyset$ \\
+→5-3,
+
+
+
+% We call $i$ {\bf \emph{justifiedly envious(has justified envy toward)}} of $i'$ if there exists a school $s \in S$ such that $s \succ_i \mu_i$, $i' \in \mu_s$, and $i \succ_s i'$.
+
+
+\begin{tcolorbox}
+  Under budget constraints, may not be $\alpha$-feasible.\\
+  CounterExample: \\
+  Sps that $s_4,S_5 \in S$ and $i_1,i_2,i_3 \in I$ and $i_1,i_3 \in I_\alpha$ and $i_2 \in I \setminus I_\alpha$.\\
+  Assume that 
+  \begin{align*}
+    \succ_{i_1}:45\emptyset, \\
+    \succ_{i_2}:4\emptyset 5, \\
+    \succ_{i_3}:54\emptyset ,\\
+    \succ_{s_4}:132\emptyset,\\
+    \succ_{s_5}:312\emptyset.
+  \end{align*}・・・(5)\\
+  Since $\mathcal{F}_s$ is budget constraints, this satisfies (1).\\
+  (5) stisfies (2) and (4).\\
+  Since $\exists \mu$ s.t. $i_1 \in \mu_{s_5}$ and $i_3 \in \mu_{s_4}$, this satisfies (3).\\Then, the matching $\mu*$ s.t. $i_3 \in \mu*_{s_5}$is TOFM but not $\alpha$-feasible because $i_1 \in I_\alpha, \mu*_{i_1} = \emptyset$.\\
+  Therefore, TOFM may not be $\alpha$-feasible under budget constraints.
+\end{tcolorbox}
+\begin{tcolorbox}
+  % \textcolor{blue}{直す}\\
+  % \textcolor{red}{
+  \begin{theorem}
+    If $\forall s \in S, \mathcal{F}_s$ is capacity constraints, then TOFM is always $\alpha$-feasible.
+  \end{theorem}
+  \begin{proof}
+    Sps $\mathcal{F}_s$ is capacity constraints.\\
+    By (1),$\exists$ TOFM $\mu^*$.\\
+    Sps , by cont, that $\exists i' \in I_\alpha$ s.t. $\mu^*_{i'} = \emptyset$.\\
+    By (4), $\forall s \in S$, $s \succ_{i'} \emptyset$.\\
+    By (3), $\exists s' \in S$ s.t. $i' \in \mu'_{s'}$.\\
+    By $\mathcal{F}_s$ is capacity constraints, $|\mu*_{s'}| \leq q_{s'}$.\\
+    Case 1:$|\mu*_{s'}| < q_{s'}$\\
+    $|\mu*_{s'} \cup \{i'\}| \leq q_{s'}$\\
+    Let \[
+        \mu^{''}_s =
+        \begin{cases}
+        \mu^*_s \cup \{i'\} & \text{if } s = s', \\
+        \mu^*_s & \text{if } s \neq s'.
+        \end{cases}
+        \]\\
+    $\mu''$ is FM.\footnote{By $|\mu*_{s'} \cup \{i'\}| \leq q_{s'}$, $\mu''$ is feasible.\\By (4), $\mu''$ is I.R..\\ By (2), $\mu''$ is fair.}\\
+    By def of TOFM(ii), $\mu^*_{i'} \succ_{i'} \mu''_{i'}$.\\
+    But $\mu*_{i'} = \emptyset $, $\mu''_{i'} = s'$, and $s' \succ_{i'} \emptyset$.\\
+    Therefore, $\mu*_{i'} \nsucc_{i'} \mu''_{i'}$.\\
+    This is cont by def of TOFM(ii).\\
+
+    Case 2:$|\mu*_{s'}| = q_{s'}$\\
+    $\exists j \in I\setminus I_\alpha$ s.t. $j \in \mu*_{s'}$.\\
+    By (2), $i' \succ_{s'} j$.\\
+    Let \[
+        \mu^{'''}_s =
+        \begin{cases}
+        (\mu^*_s\setminus \{j\}) \cup \{i'\} & \text{if } s = s', \\
+        \mu^*_s & \text{if } s \neq s'.
+        \end{cases}
+        \]\\
+    $\mu'''$ is FM.\footnote{By $|\mu*_{s'} \cup \{i'\}| \leq q_{s'}$, $\mu'''$ is feasible.\\By (4), $\mu'''$ is I.R..\\ By (2), $\mu'''$ is fair.}\\
+    By def of TOFM(ii), $\mu^*_{i'} \succ_{i'} \mu'''_{i'}$.\\
+    But $\mu*_{i'} = \emptyset $, $\mu'''_{i'} = s'$, and $s' \succ_{i'} \emptyset$.\\
+    Therefore, $\mu*_{i'} \nsucc_{i'} \mu'''_{i'}$.\\
+    This is cont by def of TOFM(ii).\\
+    Therefore, $\forall i \in I_\alpha$, $\mu^*_i \neq \emptyset$.\\
+    Therefore, TOFM is always $\alpha$-feasible under capacity constraints.
+  \end{proof}
+  % \begin{proof}
+  %   Take any $s \in S$.\\
+  %   Sps $\mathcal{F}_s$ is capacity constraints.\\
+  %   That is , $\exists q_s \in \mathbb{N}$ s.t. $\forall I' \subset I , I' \in \mathcal{F}_s \Leftrightarrow|I'| \leq q_s$.\\
+  %   By (1),$\exists$ TOFM $\mu^*$.\\
+  %   $\exists$ TOFM $\mu^*$ $\Rightarrow \exists p*$ s.t. $\mu*_s = D_s(p*) \in \mathcal{F}_s$.\\
+  %   Take any $i \in I_\alpha$.\\
+  %   To show $\mu*_i \neq \emptyset$.\\
+  %   That is, $\nexists i \in I_\alpha , \mu*_i = \emptyset$.\\
+  %   Sps, by cont, $\mu*_i = \emptyset$.\footnote{$\mu*_i = \emptyset \Rightarrow \forall s \in S, i \notin \mu*_s$}\\
+  %   That is, $\forall s \in S, i^{(s,p_s)} \succ_s i$.\footnote{If $\exists s \in S$, $i \succ_s i^{(s,p_s)}$, then $i \in \mu*_s$}\\
+
+  %   By (3) and $\mathcal{F}_s$ is capacity constraints, $|I_\alpha| \leq \sum\limits_{s \in S} q_s$.\\
+  %   Case 1:$|I_\alpha| = \sum\limits_{s \in S} q_s$\\
+  %   By $\mu*_i = \emptyset$, $|\{ i \in I : \mu*_i \neq \emptyset \}| \leq |I_\alpha| = \sum\limits_{s \in S} q_s$.\\
+  %   Case 1.1:$|\{ i \in I : \mu*_i \neq \emptyset \}| = |I_\alpha| = \sum\limits_{s \in S} q_s$\\
+  %   $\exists j \in I \setminus I_\alpha$, $\exists s'' \in S$ s.t. $j \in \mu*_{s''}$.\\
+  %   That is, $j \in \mu*_{s''} \Rightarrow j \succ_s i^{(s,p_s)} \succ_s i \Rightarrow j \succ_s i$.\\
+  %   Case 1.1.1:$j \succ_s i^{(s,p_s)} \succ_s i$\\
+  %   By $j \in \mu*_{s''}$, $j \succ_s i^{(s,p_s)} \succ_s i \Rightarrow j \succ_s i$\\
+  %   This is cont to (2).\\
+  %   Case 1.1.2:$i \succ_s j \succ_s i^{(s,p_s)}$ and $\exists s' \in S$ s.t. $i \succ_{s'} i^{(s',p_{s'})}$ and $s \succ_i s'$.\\
+  %   $i \in \mu*_{s'}$.\\
+  %   Case 1.2:$|\{ i \in I : \mu*_i \neq \emptyset \}| < |I_\alpha| = \sum\limits_{s \in S} q_s$\\
+  %   Case 2:$|I_\alpha| < \sum\limits_{s \in S} q_s$\\
+
+
+  %   If $i \in \mu*_s$, then $\mu*_i \neq \emptyset$.\\
+  %   Sps that $\exists j \in I \setminus I_\alpha$, $\exists i \in I_\alpha$ s.t. $j \in \mu*_s$ and $i \notin \mu*_s$.\\
+  %   Case 1:$i^{(s,p_s)} \succ_s i$\\
+  %   By $j \in \mu*_s$, $j \succ_s i^{(s,p_s)} \succ_s i \Rightarrow j \succ_s i$\\
+  %   This is cont to (2).\\
+  %   Case 2:$i \succ_s i^{(s,p_s)}$ and $\exists s'$ s.t. $i \succ_{s'} i^{(s',p_{s'})}$ and $s \succ_i s'$.\\
+  %   $i \in \mu*_s$.\\
+  %   % By (2) and $|I_\alpha| \leq \sum\limits_{s \in S} q_s$ and by def of $D_s(p*)$, $\nexists j \in I\setminus I_\alpha ,\nexists i \in I_\alpha$ s.t. $j \in \mu*_s$ and $i \notin \mu*_s$.\footnote{Sps that $\exists j \in I\setminus I_\alpha ,\exists i \in I_\alpha$ s.t. $j \in \mu*_s$ and $i \notin \mu*_s$.\\ By def of $D_s(p*)$, $j \succ_s i$.\\ This is cont to (2).}\\
+  %   That is , $\nexists i \in I_\alpha , \mu*_i = \emptyset$\\
+  %   Therefore, $\forall i \in I_\alpha , \mu*_i \neq \emptyset$\\
+  %   This and by def of TOFM, TOFM is always $\alpha$-feasible under capacity constraints.
+  %   \end{proof}
+% }
+\end{tcolorbox}
+
+\begin{itemize}
+  \item $J$: A non-empty finite set of subjects.
+\end{itemize}
+
+$A$ is a function that assigns each teachers and schools $i \in I \cup S$ to a subject $A(i) \subset J$.
+\[
+\quad A: I \to 2^J\setminus {\emptyset}, \forall i \in I, |A(i)|=1
+\]
+We identify  $A(i)$ with its element.\\
+
+例(科目制約下でのTOFM)\\
+$1,3 \in I_\alpha$\\
+(数学)\footnote{1さんは、数学の教員免許を持っている。}$\succ_1:45\emptyset$\\
+(英語)$\succ_2:4\emptyset 5$\\
+(英語)$\succ_3:54\emptyset$\\
+(英語1人)$\succ_4:312\emptyset$・・・3\\
+(数学1人)$\succ_5:312\emptyset$・・・1\\
+Teacher $i$ has {\bf \emph{subject-justified envy}} toward teacher $i'$ if $\exists s \in S $ s.t. $A(i) = A(i')$ and $s \succ_i \mu_i$, $i' \in \mu_s$, $i \succ_s i'$.\\
+A matching $\mu$ is {\bf \emph{subject-fair}} if no teacher has subject-justified envy toward another teacher.\\
+A matching $\mu$ is the {\bf \emph{subject-teacher-optimal fair matching (subject-TOFM)}} if:
+  
+  (i) $\mu$ is feasible, individually rational, and subject-fair, and
+  
+  (ii) $\mu_i \succeq_i \mu'_i$ for each $i \in I$ and every $\mu'$ that is feasible, individually rational, and subject-fair.\\
+
+\textbf{Subject constraint}\\
+
+\begin{itemize}
+  \item $I_{\alpha}$: A non-empty finite set of currently employed teachers.
+\end{itemize}
+
+A matching $\mu$ satisfied {\bf \emph{in service teacher conditon}} if $i \in I_{\alpha}$, $\mu_i \neq \emptyset$.\\
+
+教員の科目数は1に制限されている。学校側の科目数は制限なし。\\
+$c^j_s \in C_j$: Capacity constraints for subject j in school s.\\
+$\forall j \in J$, $\forall s \in S$, $j \notin A(s) \Rightarrow c^j_s =0$.\\
+$\mathcal{F}_s =\{\mu_s \subset I: \forall j \in J, |\{i \in I_j : i \in \mu_s\}| \leq c^j_s\}$\\
+Teacher $i$ has {\bf \emph{subject-justified envy}} toward teacher $i'$ {\bf \emph{on j}} if $\exists s \in S $ s.t. $j = A(i) = A(i')$ and $s \succ_i \mu_i$, $i' \in \mu_s$, $i \succ_s i'$.\\
+A matching $\mu^j$ is {\bf \emph{subject-fair on j}} if no teacher has subject-justified envy toward another teacher on j.\\
+A matching $\mu^j$ is {\bf \emph{$\alpha$-feasible on j}} if $\forall i \in I_j, I_\alpha$, $\mu^j_i \neq \emptyset$.\\
+
+\begin{tcolorbox}
+  Under subject constraint, subject-TOFM is always $\alpha$-feasible.
+\end{tcolorbox}
+$\forall j \in J$, let $I_j = \{i \in I \mid j = A(i)\}$, $S_j = \{s \in S \mid j \in A(s)\}$.\\
+$D^j_s(p_j) = \{ i \in I_j \mid i \succeq_s i^{(s,p^j_s)} \text{ and } s \succ_i \emptyset; \forall s' \in S_j, i \succeq_{s'} i^{(s',p^j_{s'})} \implies s \succeq_i s' \}$\\
+
+$\mathcal{F}^j_s =\{ \mu^j_s \in I_j :  |\{i \in I_j : i \in \mu_s\}| \leq c^j_s \}$\\
+By Kamada and Kojima(2024), there exists a TOFM $\mu^j$ on subject $j$, that is,
+\begin{align*}
+  &(i) \text{I.R.}: \forall i \in I_j, \mu^j_i \succ_i \emptyset,\\
+  &(ii) \text{fair}:  \nexists i,\nexists i' \in I_j, \nexists s \in S_j, s \succ_i \mu^j_i, i' \in \mu^j_s, i \succ_s i',\\
+  &(iii) \text{feasible}:  \forall s \in S_j, \mu^j_s \in \mathcal{F}^j_s,\\
+  &(iv) \text{T.O.}:  \mu^j_i \succeq_i \bar{\mu}^j_i \text{ for each } i \in I_j \text{ and every } \bar{\mu}^j \text{ that is feasible, individually rational, and fair on j.}
+\end{align*}\\
+By theorem 1, $\mu^j$ is $\alpha$-feasible on j.\\
+Let $\mu$ be such that $\forall i \in I_j$, $\mu_i=\mu^j_i$ and $\forall s \in S$, $\mu_s = \bigcup\limits_{j \in A(s)} \mu^j_s$.\\
+\begin{tcolorbox}[enhanced,breakable=true]
+  Let $\mu$ be such that $\forall i \in I_j$, $\mu_i=\mu^j_i$ and $\forall s \in S$, $\mu_s = \bigcup\limits_{j \in A(s)} \mu^j_s$.\\
+  Show that $\mu$ is subject-TOFM.
+  \begin{proof}
+    % \textcolor{blue}{書く}\\
+    % subject-TOFMであるためには、(i)、(ii)を満たす必要がある。
+    % (i) $\mu$ is feasible, individually rational, and subject-fair.\\
+    % (ii) $\mu_i \succ_i \mu'_i$ for each $i \in I$ and every $\mu'$ that is feasible, individually rational, and subject-fair.\\
+    % \textcolor{blue}{(i)を示す}.\\
+    % \textcolor{blue}{To show $\mu$ is feasible}.\\
+    To show (i).\\
+    To show $\mu$ is feasible.\\
+    Take any $s \in S$.\\
+    Take any $j \in J$.\\
+    Case 1:$j \in A(s)$\\
+    $\mu^j_s \in \mathcal{F}^j_s$.\\
+    In addition, by def of $\mu$, $\{i \in I_j : i \in \mu^j_s\} = \{ i \in I_j : i\in \mu_s \}$.\\
+    By $\mu^j_s \in \mathcal{F}^j_s$, $|\{i \in I_j : i \in \mu^j_s\}| = |\{ i \in I_j : i\in \mu_s \}| \leq c_j$.\\
+    Case 2:$j \notin A(s)$.  In this case, $c^j_s=0$.\\
+    $|\{i \in I_j : i \in \mu_s\}|= 0 = c^j_s$.\\
+    Hence, $\mu_s \in \mathcal{F}_s$.・・・(※)\\
+    % \textcolor{blue}{To show $\mu$ is individually rational}.\\
+    To show $\mu$ is individually rational.\\
+    Take any $i \in I$.\\
+    Then, $\exists j \in J$, $i \in I_j$.\\
+    Since $\mu^j_i$ is individually rational, $\mu_i = \mu^j_i \succeq_i \emptyset$.\\
+    % \textcolor{blue}{To show $\mu$ is subject-fair}.\\
+    To show $\mu$ is subject-fair.\\
+    Take any $i,i' \in I$ with $j \equiv  A(i) = A(i')$.\\
+    Sps ,by cont, $\exists s \in S$ s.t.  $s \succ_i \mu_i$, $i' \in \mu_s$, $i \succ_s i'$.\\
+    Since $i' \in \mu_s $, by def of $\mu$, $s \in S_j$.\\
+    By the assumption, $s \succ_i \mu^j_i$, $i' \in \mu^j_s$, $i \succ_s i'$.\\
+    This is a cont to the fact that $\mu^j$ is TOFM((ii)fair).\\
+    Therefore, $\mu$ is subject-fair.\\
+    % \textcolor{blue}{(ii)を示す}.\\
+    % \textcolor{blue}{Sps, by cont, there exists $\mu'$ s.t. $\mu'_i \succ_i \mu_i$}.\\
+    To show (ii).\\
+    Take any $i \in I$.\\
+    Take any $\mu'$ that is feasible, individually rational, and subject-fair.\\
+    Let $j \equiv A(i)$.\\
+    By def of $\mu^j$, $\mu^j$ is TOFM on $j$, i.e., condition (iv) is satisfied.\\
+    Let $\bar{\mu}^{j}$ be s.t. $\forall i' \in I_j$, $\bar{\mu}^j_{i'} = \bar{\mu}_{i'}$, $\forall s \in S_j$, $\bar{\mu}^j_s = \{ i' \in I_j : i' \in \bar{\mu}_s\}$.\\
+    Let us show that $\bar{\mu}^j$ is feasible, individually rational, and fair on j.\\
+    To show $\bar{\mu}^j$ is feasible on $j$.\\
+    Take any $s \in S_j$.\\
+    Since $\bar{\mu}$ is feasible, $\bar{\mu}_s \in \mathcal{F}_s$.\\
+    Since $\bar{\mu}_s \in \mathcal{F}_s$, $\forall k \in J$, $|\{i' \in I_k : i' \in \mu_s\}| \leq c^k_s$.\\
+    Since $j \in J$, $|\{i \in I_j : i \in \mu_s\}| \leq c^j_s$.\\
+    That is, $\bar{\mu}^j_s = \{ i' \in I_j : i' \in \bar{\mu}^j_s\} = \{ i' \in I_j : i' \in \bar{\mu}_s\}$.\\
+    $|\{ i' \in I_j : i' \in \bar{\mu}^j_s\}| = |\{ i' \in I_j : i' \in \bar{\mu}_s\}| \leq c^j_s$.\\
+    Hence, $\bar{\mu}^j_s \in \mathcal{F}^j_s$.\\
+    Therefore, $\bar{\mu}^j$ is feasible on $j$.\\
+    To show $\bar{\mu}^j$ is individually rational on $j$.\\
+    Take any $i \in I_j$.\\
+    Since $\mu'$ is individually rational, $\bar{\mu}_{i'} \succ_{i'} \emptyset$.\\
+    By def of I.R., $\bar{\mu}^j_{i'} = \bar{\mu}_{i'}\succ_{i'} \emptyset$.\\
+    Therefore, $\mu^{'j}$ is individually rational on $j$.\\
+    To show $\mu^{'j}$ is fair on $j$.\\
+    Take any $i',i'' \in I_j$.\\
+    That is, $j = A(i') = A(i'')$.\\
+    Sps, by cont,  $\exists s \in S_j$ s.t. $s \succ_{i'} \bar{\mu}^j_{i'}$, $i'' \in \bar{\mu}^j_s$, $i' \succ_s i''$.\\
+    Since $\mu'$ is subject-fair, $\nexists s \in S$ s.t. $A(i') = A(i'')$, $s \succ_i' \bar{\mu}_i', i'' \in \bar{\mu}_s, i' \succ_s i''$.\\
+    Since $A(i') = A(i'') = j$, $\nexists s \in S_j \subset S$  s.t. $s \succ_i' \bar{\mu}^j_{i'}, i'' \in \bar{\mu}^j_s, i' \succ_s i''$.\\
+    This is cont to the assumption.\\
+    Therefore, $\mu^{'j}$ is fair on $j$.\\
+    Hence, $\mu^{'j}$ is feasible, individually rational, and fair on j.\\
+    By def of TOFM on $j$, $\mu^j_{i'} \succeq_i' \bar{\mu}^j_{i'}$.\\
+    Hence, $\mu_{i'} = \mu^j_{i'} \succeq_i' \bar{\mu}^j_{i'} = \bar{\mu}_{i'}$.\\
+    Therefore, $\mu_i' \succeq_i' \bar{\mu}_i'$.\\
+    Therefore, $\mu$ is subject-TOFM.\\
+
+    To show $\mu$ is $\alpha$-feasible.\\
+    Since (※), $\mu$ is feasible.\\
+    To show that $\forall i \in I_\alpha$, $\mu_i \neq \emptyset$.\\
+    Take any $i \in I_\alpha$.\\
+    Let $j \equiv A(i)$.\\
+    Since $\mu^j$ is TOFM on j, by theorem 1, $\mu^j$ is $\alpha$-feasible.($\because$ Also, $\mathcal{F}^j_s$ is capacity constraint on the matching Problem between $I_j$ and $S_j$.)\\
+    That is, $\mu^j_i \neq \emptyset$.\\
+    Therefore, $\mu$ is $\alpha$-feasible.\\
+    Hence, subject-TOFM is always $\alpha$-feasible under subject constraint.\\
+  \end{proof}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!5, colframe=blue!40!black, title=他の制約]
+  \begin{itemize}
+    \item 免許を複数持っている人を採用したい(地理歴史＋公民、中高一貫校での中高免許)
+    \item 県ごとや政令指定都市ごとの採用枠
+    \item 希望地域を表明できる
+    \item 僻地学校への配置(最大月給の25％の手当がつく、平等に負担させられる)
+    \item 異動歴
+    \item 男女比
+    \item 日本の同一校勤務が短すぎる
+    \item カリキュラム適合性
+    \item 定年まじかの配慮
+    \item 生徒数との比率
+    \item 持ち家の有無
+    \item 家族関係
+    \item 夫婦は同じ学校にはならないが、同じ市区町村になる
+    \item 経験年数
+  \end{itemize}
+\end{tcolorbox}
+
+
+
+
+
+
+\begin{tcolorbox}
+  \textbf{以下を変更した場合}\\
+$\succ_s$: A strict priority order of school $s \in S$ over the set of teachers $I$.($\forall s \in S$, $\forall i \in I$, if $A(s)\cap A(i) = \emptyset \Rightarrow \emptyset \succ_s i$ and $A(s)\cap A(i) \neq \emptyset \Rightarrow i \succ_s \emptyset$)\\
+
+
+例)科目制約下でのTOFM\\
+$I = \{1,2,3,4,5\}, S = \{6,7\}$\\
+$I_\alpha = \{1,2,3\}$\\
+$\succ_1 = 67\emptyset$\footnote{学校6が都会で、学校7が田舎みたいな状況を想定。}\\
+$\succ_2 = 67\emptyset$\\
+$\succ_3 = 67\emptyset$\\
+$\succ_4 = 67\emptyset$\\
+$\succ_5 = 67\emptyset$\\
+$\succ_6 = 12354\emptyset$\footnote{この学校の選好順を2と3を入れ替えると$\alpha$-feasibleになる。現実的には、、}\\
+$\succ_7 = 124\emptyset 53$\\
+
+$A(1) = \{\text{英}\}$\\
+$A(2) = \{\text{英}\}$\\
+$A(3) = \{\text{数}\}$\\
+$A(4) = \{\text{英}\}$\\
+$A(5) = \{\text{数}\}$\\
+$A(6) = \{\text{英,数}\}$\\
+$A(7) = \{\text{英}\}$\\
+$c_6^{\text{英}} = 1$\\
+$c_6^{\text{数}} = 1$\\
+$c_7^{\text{英}} = 1$\\
+
+結果)\\
+$\mu_6 = \{1\}$\\
+$\mu_7 = \{2\}$\\
+
+Thus, $\mu$ is not $\alpha$-feasible.($\because$ $3 \in I_\alpha$, but $\mu_3 = \emptyset$.)\\
+
+Also, subject-TOFM is $\alpha$-feasible under subject constraint.\\
+
+変更しないことにした。(学校はすべての教員をacceptableである状態から始める。)\\
+\end{tcolorbox}
+
+
+
+% 学校の制約として、科目ごとのキャパではなく、科目群ごとのキャパとした場合、TOFMが$\alpha$-feasibleであるかを調べる。\\
+% ならない例orなる証明を示す。\\
+\begin{tcolorbox}[enhanced,breakable=true]
+  \textbf{Multi-subject constraint}\\
+  \textbf{教師側の科目数の制限をなくした場合}\\
+再掲(教師側の科目数制限なし)\\
+$c^j_s \in C_j$: Capacity constraints for subject j in school s.\\
+$\forall j \in J$, $\forall s \in S$, $j \notin A(s) \Rightarrow c^j_s =0$.\\
+$A$ is a function that assigns each teachers and schools $i \in I \cup S$ to a subject $A(i) \subset J$.
+\[
+\quad A: I \to 2^J\setminus {\emptyset}, \forall i \in I
+\]
+We identify  $A(i)$ with its set.\\
+$\forall j \in J$, let $I_j = \{i \in I \mid j \in A(i)\}$, $S_j = \{s \in S \mid j \in A(s)\}$.\\
+Given a matching $\mu$, a subject assignment function of $S$ is a function $J_s : \mu_s \rightarrow J$ s.t. $J_s(i) \in A(i)$.\\
+$\mathcal{F}_s =\{\mu_s \subset I : \exists \text{ subject assignment function } J_s:\mu_s \rightarrow J, \forall j \in J, |\{i \in \mu_s : J_s(i)= j\}| \leqq c_s^j\}$\\
+% $\mathcal{F}_s^j =\{\mu_s \subset I_j : \exists \text{ subject assignment function } J_s:\mu_s \rightarrow J, |\{i \in \mu_s : J_s(i)= j\}| \leqq c_s^j\}$\\
+
+Teacher $i$ has {\bf \emph{Subject-Dominance Justified Envy}} toward teacher $i'$ if $\exists s \in S $ s.t. $A(i')\subset A(i)$ and $s \succ_i \mu_i$, $i' \in \mu_s$, $i \succ_s i'$.\\
+A matching $\mu^j$ is {\bf \emph{Subject-Dominance fair}} if no teacher has subject-justified envy toward another teacher on j.\\
+A matching $\mu^j$ is {\bf \emph{$\alpha$-feasible on j}} if $\forall s \in S$, $\mu_s \in \mathcal{F}_s$, $\forall i \in I_\alpha$, $\forall i \in I_j$, $\mu^j_i \neq \emptyset$.\\
+
+参照：科目制約の際に使用したもの\\
+
+$D^j_s(p_j) = \{ i \in I_j \mid i \succeq_s i^{(s,p^j_s)} \text{ and } s \succ_i \emptyset; \forall s' \in S_j, i \succeq_{s'} i^{(s',p^j_{s'})} \implies s \succeq_i s' \}$\\
+
+参照：Fair Matching under Constraints:Theory and Applications, Kamada and Kojima(2024)
+\[
+  D_s(p) := \{i \in I \mid i \succeq_s i^{(s,p_s)} \text{ and } s \succ_i \emptyset; i \succeq_{s'} i^{(s',p_{s'})} \implies s \succeq_i s' \}.
+\]
+
+% 複数の学校に入っていることは、これまでもあったが、同じ学校の複数の科目に入っていることを考慮する。\\
+
+% \begin{align*}
+%   D^j_s(p_s^j) = \{ i \in I_j \mid &i \succeq_s i^{(s,p^j_s)} \text{ and } s \succ_i \emptyset ;\\ &\forall s' \in S_j, i \succeq_{s'} i^{(s',p^j_{s'})} \implies s \succeq_i s' ;\\ &\forall l \in J\setminus \{j\}, \forall s'' \in S_l, i \succeq_{s''} i^{(s'',p^l_{s''})} \implies s \succ_i s''\}
+% \end{align*}
+
+% 例)\\
+% $I = \{1,2,3,4,5\}, S = \{6,7\}$\\
+% $I_\alpha = \{1,2,3\}$\\
+% $\succ_1 = 67\emptyset$\\
+% $\succ_2 = 67\emptyset$\\
+% $\succ_3 = 67\emptyset$\\
+% $\succ_4 = 67\emptyset$\\
+% $\succ_5 = 67\emptyset$\\
+% $\succ_6 = 12354\emptyset$\\
+% $\succ_7 = 12345\emptyset$\\
+
+% $A(1) = \{\text{英、数}\}$\\
+% $A(2) = \{\text{英}\}$\\
+% $A(3) = \{\text{数}\}$\\
+% $A(4) = \{\text{英}\}$\\
+% $A(5) = \{\text{数}\}$\\
+% $A(6) = \{\text{英,数}\}$\\
+% $A(7) = \{\text{英}\}$\\
+% $c_6^{\text{英}} = 1$\\
+% $c_6^{\text{数}} = 1$\\
+% $c_7^{\text{英}} = 1$\\
+
+% 結果)\\
+% $\mu_6 = \{1\}$\\
+% $\mu_7 = \{2\}$\\
+
+
+\begin{align*}
+  D^j_s(p) = \{ i \in I_j \mid &i \succeq_s i^{(s,p^j_s)} \text{ and } s \succ_i \emptyset ;\\ &\forall s' \in S\setminus \{s\},\forall j' \in A(i) \cap A(s'), i \succeq_{s'} i^{(s',p^{j'}_{s'})} \implies s \succ_i s' \}
+\end{align*}
+
+
+\end{tcolorbox}
+\begin{tcolorbox}[enhanced,breakable=true]
+
+  Consider the space of all cutoff profiles \( P := \{1,...|I|,|I+1|\}^{S \times J} \). \\ 
+  We consider a mapping \( T : P \rightarrow P \), called the {\bf \emph{subject-cutoff adjustment function}}, defined as follows.
+\[
+T_s^j(p) =
+\begin{cases}
+p_s^j + 1 & \text{if } | D_s^j(p) | > c^j_s \\
+p_s^j     & \text{if } | D_s^j(p) | \leqq  c^j_s,
+\end{cases}
+\]
+where we set \( (|I| + 1) + 1 = 1. \)\\
+
+If $p$ is a fixed point of $T$, 
+\[
+\bigcup_{j \in A(s)} D^j_s(p^j_s) \in \mathcal{F}_s.
+\]\\
+
+
+For each fixed point $p \in P$, let $\mu^{p}$ be the matching such that $\forall s \in S$,$\forall j \in J$,
+\[\mu^{p}(s) =\bigcup_{j \in A(s)} D^j_s(p) .
+\]\\
+↓Kamada and Kojima(2024)\\
+\url{https://academic.oup.com/restud/article/91/2/1162/7135693?login=false}\\
+
+
+例)\\
+$I = \{1,2,3,4,5\}, S = \{6,7\}$\\
+$I_\alpha = \{1,2,3\}$\\
+$\succ_1 = 67\emptyset$\\
+$\succ_2 = 67\emptyset$\\
+$\succ_3 = 67\emptyset$\\
+$\succ_4 = 67\emptyset$\\
+$\succ_5 = 67\emptyset$\\
+$\succ_6 = 12354\emptyset$\\
+$\succ_7 = 12345\emptyset$\\
+$A(1) = \{\text{英、数}\}$\\
+$A(2) = \{\text{英}\}$\\
+$A(3) = \{\text{数}\}$\\
+$A(4) = \{\text{英}\}$\\
+$A(5) = \{\text{数}\}$\\
+$A(6) = \{\text{英,数}\}$\\
+$A(7) = \{\text{英}\}$\\
+$c_6^{\text{英}} = 1$\\
+$c_6^{\text{数}} = 1$\\
+$c_7^{\text{英}} = 1$\\
+
+$D_6^{\text{英}} = \{1,|2,4\}$\\
+$D_6^{\text{数}} = \{1,3,|5\}$\\
+$D_7^{\text{英}} = \{1,2,|4\}$\\
+
+
+結果)\\
+$\mu_6 = \{1,3\}$\\
+$\mu_7 = \{2\}$\\
+
+
+If a cutoff profile \( p \in P\) is a fixed point of \( T \), then \( \mu^{p} \) is Subject-Dominance fair.\\
+
+
+\begin{proof}
+  Sps a cutoff profile \( p \in P\) is a fixed point of \( T \).\\
+  Assume for contradiction that \( \mu^{p} \) is not Subject-Dominance fair.\\
+  Then, $\exists i,i' \in I_j$, $\exists s \in S $ s.t. $A(i')\subset A(i)$ and $s \succ_i \mu_i^p$, $i' \in \mu_s^p$, $i \succ_s i'$\\
+  Since $i' \in  \mu^{p}_s$, by def of $\mu^{p}_s$, $\exists j \in A(s)$, $i' \in D_s^j(p)$, $j \in A(i')$.\\
+  Since $i' \in D_s^j(p)$, $i' \succeq_s i^{(s,p_s^j)}$.\\ 
+  Since $A(i')\subset A(i)$, $j \in A(i') \subset A(i)$.\\
+  Since $i \succ_s i'$ and $i' \succeq_s i^{(s,p_s^j)}$, $i \succ_s i^{(s,p_s^j)}$.\\
+  Let $s'' \equiv \mu_i^p$.\\
+  Then, $i \in \mu_{s''}^p$.\\ 
+  Hence $i \in D_{s''}^{j'}(p)$ for some $j' \in A(s'')$.\\
+  Since $s \neq s''$, $j \in A(i) \cap A(s')$, and $i \succeq_{s'} i^{(s',p_{s'}^j)}$, we have $s'' \succ_i s$.\\
+  This is a contradiction to $s \succ_i \mu_i^p = s''$.\\
+\end{proof}
+
+
+fixed pointをいい感じにすることで$\alpha$-feasibleになる例1)\\
+$I = \{1,2,3,4,5\}, S = \{6,7\}$\\
+$I_\alpha = \{1,2,3\}$\\
+$\succ_1 = 56\emptyset$\\
+$\succ_2 = 56\emptyset$\\
+$\succ_3 = 56\emptyset$\\
+$\succ_4 = 56\emptyset$\\
+
+$\succ_5 = 1234\emptyset$\\
+$\succ_6 = 1234\emptyset$\\
+$A(1) = \{\text{英、数}\}$\\
+$A(2) = \{\text{英}\}$\\
+$A(3) = \{\text{数}\}$\\
+$A(4) = \{\text{英}\}$\\
+
+$A(5) = \{\text{英,数}\}$\\
+$A(6) = \{\text{英}\}$\\
+
+$c_5^{\text{英}} = 1$\\
+$c_5^{\text{数}} = 1$\\
+$c_6^{\text{英}} = 1$\\
+
+
+$D_5^{\text{英}} = \{1|,2,4\}$\\
+$D_5^{\text{数}} = \{1,3|\}$\\
+$D_6^{\text{英}} = \{1,2|,4\}$\\
+
+結果)\\
+$\mu_5 = \{1,3\}$\\
+$\mu_6 = \{2\}$\\
+
+fixed pointをいい感じにすることで$\alpha$-feasibleになる例2\\
+$I = \{1,2\}, S = \{3,4\}$\\
+$I_\alpha = \{1\}$\\
+$\succ_1 = 34\emptyset$\\
+$\succ_2 = 34\emptyset$\\
+
+
+$\succ_3 = 12\emptyset$\\
+$\succ_4 = 12\emptyset$\\
+
+$A(1) = \{\text{英、数}\}$\\
+$A(2) = \{\text{英}\}$\\
+
+
+$A(3) = \{\text{英,数}\}$\\
+$A(4) = \{\text{英}\}$\\
+
+
+$c_3^{\text{英}} = 1$\\
+$c_3^{\text{数}} = 1$\\
+$c_4^{\text{英}} = 1$\\
+
+例1)\\
+$D_3^{\text{英}} = \{1,2|\}$\\
+$D_3^{\text{数}} = \{1|\}$\\
+$D_4^{\text{英}} = \{1,2|\}$\\
+$D_4^{\text{数}} = \{|1\}$\\
+
+例1結果)\\
+$\mu_3 = \{2,1\}$\\
+$\mu_4 = \emptyset$\\
+
+
+
+fixed pointをいい感じにすることで$\alpha$-feasibleになる例3\\
+$I = \{1,2,3,4,5\}, S = \{6,7\}$\\
+$I_\alpha = \{1,2,3\}$\\
+$\succ_1 = 67\emptyset$\\
+$\succ_2 = 67\emptyset$\\
+$\succ_3 = 67\emptyset$\\
+$\succ_4 = 67\emptyset$\\
+$\succ_5 = 67\emptyset$\\
+$\succ_6 = 12345\emptyset$\\
+$\succ_7 = 12345\emptyset$\\
+
+
+$A(5) = \{\text{数}\}$\\
+$A(4) = \{\text{数}\}$\\
+$A(3) = \{\text{英,数}\}$\\
+$A(2) = \{\text{英}\}$\\
+$A(1) = \{\text{英,数}\}$\\
+
+
+$A(6) = \{\text{英,数}\}$\\
+$A(7) = \{\text{英}\}$\\
+
+$c_6^{\text{英}} = 1$\\
+$c_6^{\text{数}} = 1$\\
+$c_7^{\text{英}} = 1$\\
+
+例1)\\
+$D_6^{\text{英}} = \{1,2|,3\}$\\
+$D_6^{\text{数}} = \{1|,3,4,5\}$\\
+$D_7^{\text{英}} = \{1,2,3|\}$\\
+
+例1結果)\\
+$\mu_5 = \{1,2\}$\\
+$\mu_6 = \{3\}$\\
+
+
+fixed pointをいい感じにすることで$\alpha$-feasibleになる例3\\
+$I = \{1,2,3,4,5\}, S = \{6,7\}$\\
+$I_\alpha = \{1,2,3\}$\\
+$\succ_1 = 56\emptyset$\\
+$\succ_2 = 56\emptyset$\\
+$\succ_3 = 56\emptyset$\\
+$\succ_4 = 56\emptyset$\\
+
+
+$\succ_5 = 1234\emptyset$\\
+$\succ_6 = 1234\emptyset$\\
+
+
+
+$A(1) = \{\text{英,数}\}$\\
+$A(2) = \{\text{英,数}\}$\\
+$A(3) = \{\text{数}\}$\\
+$A(4) = \{\text{英}\}$\\
+
+
+$A(5) = \{\text{英,数}\}$\\
+$A(6) = \{\text{英}\}$\\
+
+$c_5^{\text{英}} = 1$\\
+$c_5^{\text{数}} = 1$\\
+$c_6^{\text{英}} = 1$\\
+
+例1)\\
+$D_5^{\text{英}} = \{1|,2,4\}$\\
+$D_5^{\text{数}} = \{1,2,3|\}$\\
+$D_6^{\text{英}} = \{1,2|,3\}$\\
+
+例1結果)\\
+$\mu_5 = \{1,3\}$\\
+$\mu_6 = \{2\}$\\
+
+例2)6の募集枠を英→数\\
+$D_5^{\text{英}} = \{1|,2,4\}$\\
+$D_5^{\text{数}} = \{1,2|,3\}$\\
+$D_6^{\text{数}} = \{1,2,3|\}$\\
+
+例2結果)\\
+$\mu_5 = \{1,2\}$\\
+$\mu_6 = \{3\}$\\
+
+fixed pointをいい感じにしても$\alpha$-feasibleにならない例\\
+$I = \{1,2,3,4\}, S = \{5,6\}$\\
+$I_\alpha = \{1,2,3\}$\\
+$\succ_1 = 65\emptyset$\\
+$\succ_2 = 65\emptyset$\\
+$\succ_3 = 65\emptyset$\\
+$\succ_4 = 65\emptyset$\\
+
+
+$\succ_5 = 1234\emptyset$\\
+$\succ_6 = 1234\emptyset$\\
+
+
+
+$A(1) = \{\text{英,数}\}$\\
+$A(2) = \{\text{英,数}\}$\\
+$A(3) = \{\text{数}\}$\\
+$A(4) = \{\text{英}\}$\\
+
+
+$A(5) = \{\text{英,数}\}$\\
+$A(6) = \{\text{英}\}$\\
+
+$c_5^{\text{英}} = 2$\\
+$c_6^{\text{数}} = 1$\\
+
+例)\\
+$D_5^{\text{英}} = \{1,2,|4\}$\\
+$D_6^{\text{英}} = \{1|,2,3\}$\\
+
+例結果)\\
+$\mu_5 = \{2\}$\\
+$\mu_6 = \{1\}$\\
+
+
+
+\textbf{以下を変更}
+\begin{itemize}
+  \item $B(i)$: The set of subjects taught by teacher $i$ before reassignment.($|B(i)| = 1$)
+  \item $C(i) = A(i) \setminus B(i)$: The set of subjects that teacher $i$ is licensed to teach but did not teach before reassignment.
+  \item $\succ_s^j$: The preference of school $s$ over teachers who are qualified to teach subject $j$.
+\end{itemize}
+
+Assumption(5)\\
+$\forall s \in S$, $\forall i, i' \in I$, $\forall j \in A(s)$ with $B(i) = j$ and $j \in C(i')$, $i \succ_{s}^j i'$.\\
+
+Assumption(3)'\\
+  Assume that $\exists \mu $ s.t. \\
+    (i)$\forall s \in S$, $\mu_s \in \mathcal{F}_s$,\\
+    (ii)$\forall i \in I_\alpha$, $\exists s \in S$, $\exists j \in B(i)$, $i \in \mu_s^j$.・・・(3)'\\
+
+
+
+例1\\
+$I = \{1,2,3,4\}, S = \{5,6\}$\\
+$I_\alpha = \{1,2,3\}$\\
+
+$\succ_1 = 65\emptyset$\\
+$\succ_2 = 65\emptyset$\\
+$\succ_3 = 56\emptyset$\\
+$\succ_4 = 56\emptyset$\\
+
+
+$\succ_5^{英} = 2134\emptyset$\\
+$\succ_6^{数} = 312\emptyset$\\
+
+
+
+$B(1) = \{\text{英}\}$,$C(1) = \{\text{数}\}$\\
+$B(2) = \{\text{英}\}$,$C(2) = \{\text{数}\}$\\
+$B(3) = \{\text{数}\}$,$C(3) = \{\}$\\
+$B(4) = \{\}$,$C(4) = \{\text{英}\}$\\
+
+
+$A(5) = \{\text{英}\}$\\
+$A(6) = \{\text{数}\}$\\
+
+$c_5^{\text{英}} = 2$\\
+$c_6^{\text{数}} = 1$\\
+
+例)\\
+$D_5^{\text{英}} = \{2,1|,4\}$\\
+$D_6^{\text{数}} = \{3|,1,2\}$\\
+
+例結果)\\
+$\mu_5 = \{2,1\}$\\
+$\mu_6 = \{3\}$\\
+
+
+一部変更)\\
+
+$\succ_5^{英} = 214\emptyset$\\
+$\succ_5^{数} = 312\emptyset$\\
+$\succ_6^{英} = 214\emptyset$\\
+
+$A(5) = \{\text{英,数}\}$\\
+$A(6) = \{\text{英}\}$\\
+
+$c_5^{\text{英}} = 1$\\
+$c_5^{\text{数}} = 1$\\
+$c_6^{\text{英}} = 1$\\
+
+例)\\
+$D_5^{\text{英}} = \{2,1|,4\}$\\
+$D_5^{\text{数}} = \{3|,1,2\}$\\
+$D_6^{\text{英}} = \{2|,1,4\}$\\
+
+例結果)\\
+$\mu_5 = \{2,3\}$\\
+$\mu_6 = \{1\}$\\
+
+
+例2\\
+$I = \{1,2\}, S = \{3,4\}$\\
+$I_\alpha = \{1,2\}$\\
+
+$\succ_1 = 34\emptyset$\\
+$\succ_2 = 34\emptyset$\\
+
+$\succ_3^{英} = 12\emptyset$\\
+$\succ_4^{数} = 21\emptyset$\\
+
+
+
+$B(1) = \{\text{英}\}$,$C(1) = \{\text{数}\}$\\
+$B(2) = \{\text{数}\}$,$C(2) = \{\text{英}\}$\\
+
+$A(3) = \{\text{英}\}$\\
+$A(4) = \{\text{数}\}$\\
+
+$c_3^{\text{英}} = 1$\\
+$c_4^{\text{数}} = 1$\\
+
+例)\\
+$D_3^{\text{英}} = \{1|,2\}$\\
+$D_4^{\text{数}} = \{2|,1\}$\\
+
+例結果)\\
+$\mu_3 = \{1\}$\\
+$\mu_4 = \{2\}$\\
+
+
+
+例3\\
+$I = \{1,2,3,4\}, S = \{5,6\}$\\
+$I_\alpha = \{1,2,3\}$\\
+
+$\succ_1 = 65\emptyset$\\
+$\succ_2 = 65\emptyset$\\
+$\succ_3 = 65\emptyset$\\
+$\succ_4 = 65\emptyset$\\
+
+
+$\succ_5^{英} = 1234\emptyset$\\
+$\succ_6^{数} = 2134\emptyset$\\
+
+
+
+$B(1) = \{\text{英}\}$,$C(1) = \{\text{数}\}$\\
+$B(2) = \{\text{英}\}$,$C(2) = \{\text{数}\}$\\
+$B(3) = \{\text{英}\}$,$C(3) = \{\text{数}\}$\\
+$B(4) = \{\}$,$C(4) = \{\text{英}\}$\\
+
+
+$A(5) = \{\text{英}\}$\\
+$A(6) = \{\text{数}\}$\\
+
+$c_5^{\text{英}} = 2$\\
+$c_6^{\text{英}} = 1$\\
+
+例)\\
+$D_5^{\text{英}} = \{2,1|,3,4\}$\\
+$D_6^{\text{数}} = \{2,1,3|,4\}$\\
+
+例結果)\\
+$\mu_5 = \{2,1\}$\\
+$\mu_6 = \{3\}$\\
+
+
+出来たら証明をする。
+
+
+$\exists$ fixed point $p$ of $T$ s.t. $\mu^p$ is $\alpha$-feasible.\\
+
+
+\begin{proof}
+  Let $\mu$ s.t. 
+
+\end{proof}
+
+\begin{proof}
+  Sps, by cont that $\mu^p$ is not $\alpha$-feasible.\\
+  Then, $\exists i \in I_\alpha$ s.t. $\mu^p_{i} = \emptyset$.\\
+  By the assumption(3), $\exists \mu'$ s.t. $\mu'$ is $\alpha$-feasible.\\
+  Since $\mu'$ is $\alpha$-feasible, $\exists s' \in S$ s.t. $i \in \mu'_{s'}$.\\
+  Sps $\exists i' \in I \setminus I_\alpha$ s.t. $i' \in \mu^p_{s'}$.\\
+  This is a cont by the assumption(2).\\
+  That is $\nexists i \in \mu^p$ s.t. $i \in I \setminus I_\alpha$.\\
+  If $\mu^p_{i} = \emptyset$, then 
+\end{proof}
+
+
+
+If $\mu$ is a $\alpha$-feasible and I.R. and Subject-Dominance fair, then $\exists$ fixed point $p$ s.t. $\mu = \mu^p$.\\
+
+\begin{proof}
+  Take any $\mu$ that is $\alpha$-feasible and I.R. and Subject-Dominance fair.\\
+  Take any $s \in S$.\\
+  Take any $j \in J$.\\
+  Let
+  \[
+  p_s^j =
+  \begin{cases}
+  \min\{l: i^{(s,l)} \in \mu_s^j \} & \text{if } \mu_s^j \neq \emptyset \\
+  |I| + 1   & \text{if } \mu_s^j = \emptyset.
+  \end{cases}
+  \]\\
+  To show that $\mu_s = \mu_s^p$.\\
+  To show that $\mu_s^p \subset \mu_s$.\\
+  Take any $i \in \mu_s^p$.\\
+  Sps by cont, $i \notin \mu_s$.\\
+  Sps $\mu_i = s',s \neq s'$.\\
+  Since $i \in \mu_s^p$, $i \succ_{s'} i^{(s,p_s^j)} \Rightarrow s \succ_i s'$.\\
+  This is a contradiction to the fact that $\mu$ is Subject-Dominance fair.\\
+  Sps $\mu_i = \emptyset$.\\
+  By def of $p_s^j$ , $s \succ_i \emptyset$.\\
+  This is a cont to the fact that $\mu$ is I.R..\\
+  So $i \in \mu_s$.\\
+
+  To show that $\mu_s \subset \mu_s^p$.\\
+  Take any $i \in \mu_s$.\\
+  Sps by cont, $i \notin \mu_s^p$.\\
+  Sps $i^{(i,p_s^j)} \succ_s i$.\\
+  ?\\
+  Sps $i \in \mu_{s'}$, $s \neq s'$.\\
+  This is a contradiction to the fact that $\mu$ is Subject-Dominance fair.\\
+  So $i \in \mu_s^p$.\\
+  Therefore, $\mu_s = \mu_s^p$.\\
+
+  To show that $p$ is a fixed point of $T$.\\
+  SInce $\mu$ is feasible,by def of T, $p = (p_s)_{s \in S}$ is a fixed point of $T$.
+\end{proof}
+
+\end{tcolorbox}
+\bigbreak
+
+\begin{tcolorbox}[enhanced,breakable=true]
+  あとで\\
+  Fixed PointがLatticeになっているか？\\
+  なっているなら、optimalなSubject-TOFMが存在する\\
+\end{tcolorbox}
+\begin{tcolorbox}[enhanced,breakable=true]
+\textbf{教員が学校が募集する枠に対して、教員が選好を持っている場合}\\
+$\forall j \in J$, $\forall s \in S$, $s_j \Leftrightarrow  J_s(i) = j \Leftrightarrow \mu_i^j = s$\\
+例) Subject-TOFM\\
+$I = \{1,2,3,4,5\}, S = \{6,7\}$\\
+$I_\alpha = \{1,2,3\}$\\
+$\succ_1 = 6_{\text{英}}6_{\text{数}}7_{\text{英}}\emptyset$\\
+$\succ_2 = 67\emptyset$\\
+$\succ_3 = 67\emptyset$\\
+$\succ_4 = 67\emptyset$\\
+$\succ_5 = 67\emptyset$\\
+$\succ_6 = 12354\emptyset$\\
+$\succ_7 = 12345\emptyset$\\
+
+$A(1) = \{\text{英、数}\}$\\
+$A(2) = \{\text{英}\}$\\
+$A(3) = \{\text{数}\}$\\
+$A(4) = \{\text{英}\}$\\
+$A(5) = \{\text{数}\}$\\
+$A(6) = \{\text{英,数}\}$\\
+$A(7) = \{\text{英}\}$\\
+$c_6^{\text{英}} = 1$\\
+$c_6^{\text{数}} = 1$\\
+$c_7^{\text{英}} = 1$\\
+
+結果)\\
+$\mu_6 = \{1,3\}$( $\mu_6^{\text{英語}} = \{1\}$, $\mu_6^{\text{数学}} = \{3\}$)\\
+$\mu_7 = \{2\}$\\
+
+$D_6^{\text{英}} = \{1,|2,4\}$\\
+$D_6^{\text{数}} = \{1,3,|5\}$\\
+$D_7^{\text{英}} = \{1,2,|4\}$\\
+
+
+\begin{align*}
+  D^j_s(p_s^j) = \{ i \in I_j \mid &i \succeq_s i^{(s,p^j_s)} \text{ and } s \succ_i \emptyset ;\\ &\forall s' \in S_j, i \succeq_{s'} i^{(s',p^j_{s'})} \implies s \succeq_i s' ;\\ &\forall l \in A(s), i \succeq_{s} i^{(s,p^l_{s})} \implies s_j \succeq_i s_l\}
+\end{align*}
+
+\bigbreak
+
+例) Subject-TOFMが$\alpha$-feasibleにならない例\\
+$I = \{1,2,3,4,5\}, S = \{6,7\}$\\
+$I_\alpha = \{1,2,3\}$\\
+$\succ_1 = 6_{\text{数}}6_{\text{英}}7_{\text{英}}\emptyset$\\
+$\succ_2 = 67\emptyset$\\
+$\succ_3 = 67\emptyset$\\
+$\succ_4 = 67\emptyset$\\
+$\succ_5 = 67\emptyset$\\
+$\succ_6 = 12354\emptyset$\\
+$\succ_7 = 12345\emptyset$\\
+
+$A(1) = \{\text{英、数}\}$\\
+$A(2) = \{\text{英}\}$\\
+$A(3) = \{\text{数}\}$\\
+$A(4) = \{\text{英}\}$\\
+$A(5) = \{\text{数}\}$\\
+$A(6) = \{\text{英,数}\}$\\
+$A(7) = \{\text{英}\}$\\
+$c_6^{\text{英}} = 1$\\
+$c_6^{\text{数}} = 1$\\
+$c_7^{\text{英}} = 1$\\
+
+結果)\\
+$\mu_6 = \{1,2\}$( $\mu_6^{\text{英語}} = \{2\}$, $\mu_6^{\text{数学}} = \{1\}$)\\
+$\mu_7 = \{\} = \emptyset$\\
+
+
+Thus, $\mu_3 = \emptyset$.\\
+
+$D_6^{\text{英}} = \{1,2,|4\}$\\
+$D_6^{\text{数}} = \{1,|3,5\}$\\
+$D_7^{\text{英}} = \{1,2,4|\}$\\
+\end{tcolorbox}
+\begin{tcolorbox}
+  Teacher $i$ has {\bf \emph{subject-justified envy}} toward teacher $i'$ {\bf \emph{on j}} if $\exists s \in S $ s.t. $j = A(i) = A(i')$ and $s \succ_i \mu_i$, $i' \in \mu_s$, $i \succ_s i'$.\\
+  A matching $\mu^j$ is {\bf \emph{subject-fair on j}} if no teacher has subject-justified envy toward another teacher on j.\\
+  \begin{align*}
+    D^j_s(p_s^j) = \{ i \in I_j \mid &i \succeq_s i^{(s,p^j_s)} \text{ and } s \succ_i \emptyset ;\\ &\forall s' \in S_j, i \succeq_{s'} i^{(s',p^j_{s'})} \implies s \succeq_i s' ;\\ &\forall l \in A(s), i \succeq_{s} i^{(s,p^l_{s})} \implies s_j \succeq_i s_l\}
+  \end{align*}
+  
+
+  If $\forall s \in S$, $D_s(p_s) \in \mathcal{F}_s$, then $\mu$ is subject-fair.\\
+  $\Leftrightarrow$ $\forall s \in S$, $\forall j \in J$, if $D_s^j(p_s^j) \in \mathcal{F}_s^j$, then $\mu_s^j$ is subject-fair.\\
+
+  \begin{proof}
+    Take any $s \in S$.\\
+    Take any $j \in J$.\\
+    Suppose $D_s^j(p_s^j) \in \mathcal{F}_s^j$.\\
+    Sps, by cont, $\exists i,i' \in I_j$ s.t. $i \succ_s \mu^j_i$, $i' \in \mu^j_s$, $i \succ_s i'$.\\
+    Since $D_s^j(p_s^j) \in \mathcal{F}_s^j$, $\exists J_s$ s.t. $|\{i \in I_j : J_s(i) = j\}| \leq c_s^j$.\\
+    By def of $D_s^j(p_s^j)$, $\forall i \in I_j$, $i \succeq_s i^{(s,p^j_s)}$.\\
+  \end{proof}
+\end{tcolorbox}
+
+\begin{tcolorbox}
+  Subject-TOFM is always $\alpha$-feasible under multi-subject constraint.\\
+
+  \begin{proof}
+    
+  \end{proof}
+\end{tcolorbox}
+% \textcolor{red}{}\\
+% \\\\
+% $\bar{A}$ is a function that assigns each teachers and schools $i \in I \cup S$ to a subject $\bar{A}(i) \subset \{J_1,...,J_K\}$.
+% \footnote{特定してる(subsetじゃなくて)\\
+% Let \( \{J_1,...,J_K\} \) be a subset of \( J \).\\
+% 中学数学＋高校数学、高校数学＋情報など、あり得そうで、相互に素（Disjointness）な科目群の組み合わせに限定することが適切かは、わからない。あと、被覆性（Coverage）も。\\
+% }
+% \[
+% \quad \bar{A}: I\cup S \to 2^{\{J_1,...,J_K\}}\setminus {\emptyset}, \forall i \in I, |\bar{A}(i)|=1
+% \]\\
+% We identify  $\bar{A}(i)$ with its elements.\\
+
+% $I_j = \{i \in I : j \in A(i)\}$\\
+
+
+% \footnote{より、網羅的には、以下を参照\\
+% \url{https://www.mext.go.jp/b_menu/shingi/chukyo/chukyo3/050/siryo/attach/1349977.htm}} 
+
+% Partitionでかくなら\footnote{Let $\{J_1,...,J_K\}$,e.g.,$J_K = \{数学,理科,英語\}$ be a partition of J.\\
+% A partition of \( J \) is a family of subsets \( \{ J_k \}_{k \in \{1,....,K\}} \) satisfying:
+% \[
+% J_k \neq \emptyset, \quad J_k \cap J_l = \emptyset \text{ for } k \neq l, \quad \bigcup_{k \in \{1,....,K\}} J_k = J.
+% \]
+% $\mathcal{J} \equiv \{P : P = \{J_1,...,J_K\}, P \text{ is a partition of } J\}$.\\
+% }\\
+
+
+
+% 例)\\
+% $i,i' \in I $, $|\bar{A}(i)|=1$\\
+% $\bar{A}(i) = \{J_3\} =$\{\{数学、情報\}\}\\
+% $\bar{A}(i') = \{J_1\} = $\{\{英語\}\}\\
+% $s,s' \in S $\\
+% $\bar{A}(s) = \{J_1,J_3\} = $\{\{英語\},\{数学、情報\}\}\\
+% $\bar{A}(s') = \{J_1\} = $\{\{英語\}\}\\
+
+
+
+% $B$ is a function that assigns each schools $s \in S$ to a subject groups $B(s) \subset J$.
+% \[
+% \quad B: S \to 2^{\{J_1,...,J_K\}}\setminus {\emptyset}, \forall s \in S
+% \]
+% We identify  $B(s)$ with its element.\\
+
+% $\forall k \in \{1,....,K\}$, $|\{i \in \mu_s : i \in \bigcup\limits_{j \in J_k} I_j\}| \leq c_k$.\\
+% $c^k_s \in C_k$: Capacity constraints for subject group $k$ in school s.\\
+% $\forall k \in \{1,....,K\}$, $\forall s \in S$, $J_k \notin A(s) \Rightarrow c^k_s =0$\footnote{$J_k$で募集されていなくても、その任意の部分集合の$J_l$では募集されているかもしれない。がそれは関係ない。}.\\
+
+
+% $\forall k \in \{J_1,...,J_K\}$, let $\mathcal{J}_k \equiv \{ E \subseteq J : J_k \subseteq E\}$.\footnote{教員免許を複数持っているが、募集では1つしか使わない状況を加味するため}\\
+
+% $\forall k \in \{J_1,...,J_K\}$, let $I_k = \{i \in I \mid \bar{A}(i) \in \mathcal{J}_k \}$.\\
+% % $\forall k \in \{J_1,...,J_K\}$, $S_k = \{s \in S \mid J_k \in \bar{A}(s)\}$.\\
+% $\mathcal{F}_s =\{\mu_s \in I: \forall k \in \{1,....,K\}, |\{i \in \mu_s : i \in I_k\}| \leq c^k_s\}$\\
+% $D^k_s(p_k) = \{ i \in I_k \mid i \succeq_s i^{(s,p^k_s)} \text{ and } s \succ_i \emptyset; \forall s' \in S_k, i \succeq_{s'} i^{(s',p^k_{s'})} \implies s \succeq_i s' \}$\\
+
+% $\mathcal{F}^k_s =\{\mu^k_s \in I_k: |\{i \in \mu_s : i \in I_k\}| \leq c^k_s\}$\\
+
+
+
+
+
+
+
+
+
+
+保留\\
+\textbf{Subject group constraint}\\
+教師側の科目数の制限がなく、学校側は、科目群ごとのキャパ制約がある場合。\\
+Let $\{J_1,...,J_K\}$,e.g.,$J_K = \{数学,理科,英語\}$, be a subset of J.\\
+$\bar{A}$ is a function that assigns each teachers and schools $i \in I \cup S$ to a subject groups $\bar{A}(i) \subset J$.
+\[
+\quad \bar{A}: I\cup S \to 2^{\{J_1,...,J_K\}}\setminus {\emptyset}, \forall i \in I, |\bar{A}(i)|=1
+\]\\
+We identify  $\bar{A}(i)$ with its elements.\\
+例)\\
+$i,i' \in I $, $|\bar{A}(i)|=1$\\
+$\bar{A}(i) = \{J_3\} =$\{\{数学、情報\}\}\\
+$\bar{A}(i') = \{J_1\} = $\{\{英語\}\}\\
+$s,s' \in S $\\
+$\bar{A}(s) = \{J_1,J_3\} = $\{\{英語\},\{数学、情報\}\}\\
+$\bar{A}(s') = \{J_1\} = $\{\{英語\}\}\\
+
+$\forall k \in \{1,....,K\}$, $|\{i \in \mu_s : i \in \bigcup\limits_{j \in J_k} I_j\}| \leq c_k$.\\
+$c^k_s \in C_k$: Capacity constraints for subject group $k$ in school s.\\
+
+
+$\forall k \in \{J_1,...,J_K\}$, let $\mathcal{J}_k \equiv \{ E \subseteq J : J_k \subseteq E\}$.\footnote{教員免許を複数持っているが、募集では1つしか使わない状況を加味するため}\\
+
+$\forall k \in \{J_1,...,J_K\}$, let $I_k = \{i \in I \mid \bar{A}(i) \in \mathcal{J}_k \}$.\\
+$\forall k \in \{J_1,...,J_K\}$, $S_k = \{s \in S \mid J_k \in \bar{A}(s)\}$.\\
+$\mathcal{F}_s =\{\mu_s \in I: \forall k \in \{1,....,K\}, |\{i \in \mu_s : i \in I_k\}| \leq c^k_s\}$\\
+$D^k_s(p_k) = \{ i \in I_k \mid i \succeq_s i^{(s,p^k_s)} \text{ and } s \succ_i \emptyset; \forall s' \in S_k, i \succeq_{s'} i^{(s',p^k_{s'})} \implies s \succeq_i s' \}$\\
+
+$\mathcal{F}^k_s =\{\mu^k_s \in I_k: |\{i \in \mu_s : i \in I_k\}| \leq c^k_s\}$\\
+
+例(科目群制約下でのTOFM)→科目制約同様(数学→数学,英語、英語→英語,理科)\\
+$1,3 \in I_\alpha$\footnote{各先生は、制約さえ犯していなければ、複数のグループに応募することが可能である。数学と情報の免許を持つ先生が、数学、数学＋情報のどちらの募集にも応募できるように。}\\
+(数学,英語)$\succ_1:45\emptyset$\\
+(英語,理科)$\succ_2:4\emptyset 5$\\
+(英語,理科)$\succ_3:54\emptyset$\\
+(英語,理科)$\succ_4:312\emptyset$・・・3\\
+(数学,英語)$\succ_5:312\emptyset$・・・1\\
+
+\begin{tcolorbox}
+  科目群制約下でのsubject-TOFMが、$\alpha$-feasibleにならない例。
+
+例)\\
+$I = \{1,2,3,4,5,6\}, S = \{7,8\}$\\
+$I_\alpha = \{1,2,3\}$\\
+$\succ_1 = 87\emptyset$\\
+$\succ_2 = 87\emptyset$\\
+$\succ_3 = 87\emptyset$\\
+
+$\succ_4 = 87\emptyset$\\
+$\succ_5 = 8\emptyset 7$\\
+$\succ_6 = 7\emptyset 8$\\
+
+$\succ_7 = 123456\emptyset$\\
+$\succ_8 = 123456\emptyset$\\
+
+$A(1) = \{J_1\}$\\
+$A(2) = \{J_2\}$\\
+$A(3) = \{J_3\}$\\
+$A(4) = \{J_4\}$\\
+$A(5) = \{J_5\}$\\
+$A(6) = \{J_5\}$\\
+
+$A(7) = \{J_1,J_4\}$\\
+$A(8) = \{J_2,J_5,J_3\}$\\
+
+$J_1 = \{数学,技術\}$\\
+$J_2 = \{数学\}$\\
+$J_3 = \{技術\}$\\
+$J_4 = \{物理,化学\}$\\
+$J_5 = \{英語\}$\\
+
+$c^1_7 = 1$\\
+$c^4_7 = 1$\\
+$c^2_8 = 1$\\
+$c^5_8 = 1$\\
+$c^3_8 = 1$\\
+
+$\mu_7 = \emptyset$\\
+$\mu_8 = \{1,2\}$\\
+
+Thus, $\mu$ is not $\alpha$-feasible.($\because$ $3 \in I_\alpha$, but $\mu_3 = \emptyset$.)\footnote{先生1さんが、数学と技術両方の免許を持った人材を募集している学校7ではなく、何らかの事情で学校8を希望していることを想定した例。学校の優先順位は固定。}\\
+
+
+
+
+
+\end{tcolorbox}
+
+\begin{tcolorbox}
+  Under subject group constraint, subject-TOFM is always $\alpha$-feasible.
+\end{tcolorbox}
+\end{document}
